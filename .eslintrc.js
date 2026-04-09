@@ -31,4 +31,18 @@ module.exports = {
       version: "detect", // Tells eslint-plugin-react to automatically detect the version of React to use
     },
   },
+  overrides: [
+    {
+      files: ["**/*.spec.ts", "src/environment/testing/fake.ts"],
+      globals: {
+        afterEach: "readonly",
+        beforeEach: "readonly",
+        describe: "readonly",
+        expect: "readonly",
+        it: "readonly",
+        test: "readonly",
+        vi: "readonly",
+      },
+    },
+  ],
 };

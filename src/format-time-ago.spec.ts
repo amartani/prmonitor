@@ -4,12 +4,12 @@ describe("formatTimeAgo", () => {
   const now = 1_700_000_000_000;
 
   beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(now);
+    vi.useFakeTimers();
+    vi.setSystemTime(now);
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it("returns just now for under 60 seconds", () => {
