@@ -6,6 +6,16 @@ import { GraphQLClient, gql } from "graphql-request";
 const ThrottledOctokit = Octokit.plugin(throttling);
 const graphQLEndpoint = "https://api.github.com/graphql";
 
+/** Only include PRs whose last activity (GitHub `updated` field) is within this window. */
+const PULL_REQUEST_SEARCH_MAX_AGE_DAYS = 90;
+
+function pullRequestSearchUpdatedSince(): string {
+  const cutoff = new Date(
+    Date.now() - PULL_REQUEST_SEARCH_MAX_AGE_DAYS * 24 * 60 * 60 * 1000
+  );
+  return cutoff.toISOString().slice(0, 10);
+}
+
 export function buildGitHubApi(token: string): GitHubApi {
   const octokit: Octokit = new ThrottledOctokit({
     auth: `token ${token}`,
@@ -51,9 +61,10 @@ export function buildGitHubApi(token: string): GitHubApi {
       return response.data;
     },
     searchPullRequests(query) {
+      const updatedSince = pullRequestSearchUpdatedSince();
       return octokit.paginate(
         octokit.search.issuesAndPullRequests.endpoint.merge({
-          q: `is:pr ${query}`,
+          q: `is:pr ${query} updated:>${updatedSince}`,
         })
       );
     },
