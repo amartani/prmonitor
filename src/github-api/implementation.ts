@@ -6,11 +6,6 @@ import { GraphQLClient, gql } from "graphql-request";
 const ThrottledOctokit = Octokit.plugin(throttling);
 const graphQLEndpoint = "https://api.github.com/graphql";
 
-interface ThrottlingOptions {
-  method: string;
-  url: string;
-}
-
 export function buildGitHubApi(token: string): GitHubApi {
   const octokit: Octokit = new ThrottledOctokit({
     auth: `token ${token}`,
@@ -18,7 +13,7 @@ export function buildGitHubApi(token: string): GitHubApi {
     // Enable Draft Pull Request API.
     previews: ["shadow-cat"],
     throttle: {
-      onRateLimit: (retryAfter: number, options: ThrottlingOptions, _: Octokit, retryCount: number) => {
+      onRateLimit: (retryAfter, options, _octokit, retryCount) => {
         console.warn(
           `Request quota exhausted for request ${options.method} ${options.url}`
         );
@@ -29,7 +24,7 @@ export function buildGitHubApi(token: string): GitHubApi {
         }
         return false;
       },
-      onSecondaryRateLimit: (retryAfter: number, options: ThrottlingOptions, _: Octokit, retryCount: number) => {
+      onSecondaryRateLimit: (retryAfter, options, _octokit, retryCount) => {
         console.warn(
           `Secondary Rate Limit detected for request ${options.method} ${options.url}`
         );

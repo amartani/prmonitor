@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { observer } from "mobx-react-lite";
-import React, { useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { LargeButton } from "./design/Button";
 
 export interface WhitelistedTeamsProps {
@@ -17,7 +17,7 @@ export const WhitelistedTeams = observer((props: WhitelistedTeamsProps) => {
     defaultWhitelistedTeams
   );
   const inputRef = useRef<HTMLInputElement>(null);
-  const handleWhitelistedTeamsChange = (e: React.FormEvent) => {
+  const handleWhitelistedTeamsChange = (e: FormEvent) => {
     e.preventDefault();
     if (!inputRef.current) {
       return;
@@ -25,7 +25,7 @@ export const WhitelistedTeams = observer((props: WhitelistedTeamsProps) => {
 
     setWhitelistedTeams(inputRef.current.value);
   };
-  const handleApplyWhitelistedTeamsChange = (e: React.FormEvent) => {
+  const handleApplyWhitelistedTeamsChange = (e: FormEvent) => {
     e.preventDefault();
     props.onChangeWhitelistedTeams(whitelistedTeams);
   };

@@ -48,7 +48,7 @@ function loadFromStorage<T>(
       let result;
       try {
         result = JSON.parse(dict[key]);
-      } catch (e) {
+      } catch {
         // Because we were previously storing values directly without JSON serialization,
         // we may need to fall back to non-JSON deserialization.
         //

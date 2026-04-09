@@ -1,6 +1,8 @@
-import { PaginationResults } from "@octokit/plugin-paginate-rest/dist-types/types";
 import { Octokit } from "@octokit/rest";
 import { GetResponseDataTypeFromEndpointMethod } from "@octokit/types";
+
+/** Merged pages from Octokit `paginate()` (matches @octokit/plugin-paginate-rest). */
+export type PaginationResults<T> = T[];
 
 /**
  * A simple wrapper around GitHub's API.

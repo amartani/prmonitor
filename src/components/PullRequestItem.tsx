@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
-import React from "react";
+import { MouseEvent } from "react";
 import { Dropdown } from "react-bootstrap";
 import { EnrichedPullRequest } from "../filtering/enriched-pull-request";
 import { isRunningAsPopup } from "../popup-environment";
@@ -123,12 +123,12 @@ export interface PullRequestItemProps {
 }
 
 export const PullRequestItem = observer((props: PullRequestItemProps) => {
-  const open = (e: React.MouseEvent) => {
+  const open = (e: MouseEvent) => {
     props.onOpen(props.pullRequest.htmlUrl);
     e.preventDefault();
   };
 
-  const preventDefault = (e: React.MouseEvent) => {
+  const preventDefault = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
   };
@@ -139,7 +139,7 @@ export const PullRequestItem = observer((props: PullRequestItemProps) => {
     };
   };
 
-  const unmute = (e: React.MouseEvent) => {
+  const unmute = (e: MouseEvent) => {
     props.onUnmute(props.pullRequest);
     e.preventDefault();
     e.stopPropagation();

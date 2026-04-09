@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { observer } from "mobx-react-lite";
-import React from "react";
 import { EnrichedPullRequest } from "../filtering/enriched-pull-request";
 import { PullRequest } from "../storage/loaded-state";
 import { MuteType } from "../storage/mute-configuration";

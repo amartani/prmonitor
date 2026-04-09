@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Badge, Tab, Tabs } from "react-bootstrap";
 import { Filter } from "../filtering/filters";
 import { isRunningAsPopup } from "../popup-environment";

@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { observer } from "mobx-react-lite";
-import React from "react";
 import { Badge } from "react-bootstrap";
 import { EnrichedPullRequest } from "../filtering/enriched-pull-request";
 import {

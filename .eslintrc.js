@@ -2,11 +2,12 @@ module.exports = {
   parser: "@typescript-eslint/parser", // Specifies the ESLint parser
   extends: [
     "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+    "plugin:react/jsx-runtime", // Automatic JSX runtime (matches tsconfig react-jsx)
     "plugin:@typescript-eslint/recommended", // Uses the recommended rules from @typescript-eslint/eslint-plugin
     "prettier",
   ],
   parserOptions: {
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    ecmaVersion: 2020, // Aligns with TypeScript target and modern syntax
     sourceType: "module", // Allows for the use of imports
     ecmaFeatures: {
       jsx: true, // Allows for the parsing of JSX
@@ -14,7 +15,6 @@ module.exports = {
   },
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/explicit-member-accessibility": [
