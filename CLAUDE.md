@@ -2,6 +2,22 @@
 
 PR Monitor is a Chrome and Firefox browser extension that helps track incoming and outgoing pull requests on GitHub. The extension uses Manifest V3 and runs as a background service worker that periodically fetches PR data and displays it in a popup UI.
 
+## Using Context7 for Documentation
+
+When working with library-specific questions, use the Context7 MCP server to fetch current documentation. This ensures you have up-to-date API references and examples.
+
+**Main library IDs for this project:**
+- React: `/websites/react_dev`
+- TypeScript: `/microsoft/typescript-website`
+- MobX: `/mobxjs/mobx`
+- Jest: `/websites/jestjs_io`
+- Webpack: `/websites/webpack_js`
+- Chrome Extensions (Manifest V3): `/websites/developer_chrome_extensions`
+- Octokit (GitHub API): `/octokit/rest.js`
+- GraphQL Request: `/onfido/graphql-request`
+
+Use these library IDs when querying Context7 for API syntax, configuration, migration guides, or troubleshooting issues specific to these libraries.
+
 ## Development Commands
 
 ```bash
