@@ -10,12 +10,12 @@ PR Monitor is an abandoned Chrome/Firefox extension for tracking GitHub pull req
 - **Performance**: TypeScript 5 compiles faster, Vite would be faster than Webpack
 - **Maintainability**: Modern patterns make future changes easier
 
-**Current tech stack:**
-- TypeScript 4.7.4 (outdated, v5.x is current)
-- React 18.2.0 (good, but using old ReactDOM.render API)
-- MobX 6.6.1 (good, using decorators with makeObservable)
-- Webpack 5.74 (functional, but Vite would be faster)
-- Jest 28 (functional, but test env set to "node" instead of "jsdom")
+**Current tech stack (post-modernization):**
+- TypeScript 5.x
+- React 18 with `createRoot`
+- MobX 6 with decorators
+- Vite 6 (popup + separate single-file background build)
+- Vitest 3 with jsdom
 - Moment.js 2.29.4 (deprecated, used only once for `.fromNow()`)
 - @octokit/rest 19 (outdated, v21+ is current)
 
@@ -342,15 +342,15 @@ yarn lint:check  # Should pass
 
 ## Phase 5: Optional Advanced Improvements
 
-### 5.1 Migrate from Webpack to Vite (SKIP)
+### 5.1 Migrate from Webpack to Vite (DONE)
 
-**Recommendation**: **Skip for abandoned project**. Vite provides faster dev server and better DX, but migration is high-risk and requires significant effort. Webpack 5 works fine for this use case.
+**Implementation:** Two-step production build: `vite build --config vite.background.config.ts` emits a single `background.js` (MV3 service worker, `inlineDynamicImports`) plus copied `manifest.json` and `images/`; then `vite build` emits `index.html` and hashed assets with `base: './'` for `chrome-extension://` URLs. Dev server uses root `index.html` and `src/popup.tsx`.
 
 ---
 
-### 5.2 Migrate from Jest to Vitest (SKIP)
+### 5.2 Migrate from Jest to Vitest (DONE)
 
-**Recommendation**: **Skip for abandoned project**. Vitest is faster with better DX, but tests work fine with Jest. Not worth the migration effort.
+**Implementation:** `vitest` config in `vite.config.ts` (`globals`, `environment: 'jsdom'`). Mocks use `vi` from `vitest`; `src/testing/mocked.ts` types mocks with Vitest `Mock`.
 
 ---
 
@@ -456,9 +456,9 @@ After each phase:
 | Phase 2 | Done | TypeScript `^5.7.0`; `jsx: "react-jsx"`; components use automatic JSX (hooks-only imports where needed); `popup.tsx` uses `createRoot` from `react-dom/client` with null check for `#root` |
 | Phase 3 | Done | `@types/react` / `@types/react-dom` `^18.3.0`; babel-loader rule removed from `webpack.config.js` |
 | Phase 4 | Done | `@octokit/core` `^6.1.4` (peer for throttling); `@octokit/rest` `^21`, `@octokit/plugin-throttling` `^9`; `PaginationResults` type local in `github-api/api.ts` (avoids broken paginate-rest subpath); throttle callbacks untyped for LimitHandler compatibility; `react-bootstrap` `^2.10`; ESLint `^8.57`, `@typescript-eslint` `^8`, `eslint-config-prettier` `^9`, `eslint-plugin-react` `^7.37`; extends `plugin:react/jsx-runtime` |
-| Phase 5 | Skipped | Per plan (5.1–5.2); 5.3 optional not done |
+| Phase 5 | Done | Vite (`vite.config.ts`, `vite.background.config.ts`, root `index.html`); Vitest; Webpack/Jest removed; `tsconfig` `useDefineForClassFields: false` for MobX |
 
-**Verification (latest):** `yarn test`, `yarn build`, and `yarn lint:check` all pass. Jest prints a ts-jest warning that TypeScript 5.x is outside its tested range; upgrading Jest/ts-jest together would clear that (optional follow-up).
+**Verification (latest):** `yarn test`, `yarn build`, and `yarn lint:check` all pass.
 
 ---
 

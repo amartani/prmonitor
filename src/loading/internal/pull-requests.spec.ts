@@ -1,5 +1,6 @@
 import { components } from "@octokit/openapi-types";
 import { RestEndpointMethodTypes } from "@octokit/rest";
+import { vi } from "vitest";
 import { GitHubApi } from "../../github-api/api";
 import { mocked } from "../../testing/mocked";
 import { refreshOpenPullRequests } from "./pull-requests";
@@ -108,12 +109,12 @@ describe("refreshOpenPullRequests", () => {
 
 function mockGitHubApi(): GitHubApi {
   return {
-    loadAuthenticatedUser: jest.fn(),
-    searchPullRequests: jest.fn(),
-    loadPullRequestDetails: jest.fn(),
-    loadReviews: jest.fn(),
-    loadComments: jest.fn(),
-    loadCommits: jest.fn(),
-    loadPullRequestStatus: jest.fn(),
+    loadAuthenticatedUser: vi.fn(),
+    searchPullRequests: vi.fn(),
+    loadPullRequestDetails: vi.fn(),
+    loadReviews: vi.fn(),
+    loadComments: vi.fn(),
+    loadCommits: vi.fn(),
+    loadPullRequestStatus: vi.fn(),
   };
 }

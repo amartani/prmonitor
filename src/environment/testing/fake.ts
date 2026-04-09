@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { Badger, BadgeState } from "../../badge/api";
 import { CrossScriptMessenger, Message } from "../../messaging/api";
 import { Notifier, NotifierClickListener } from "../../notifications/api";
@@ -9,7 +10,7 @@ import {
 
 export function buildTestingEnvironment() {
   const store = fakeStore();
-  const githubLoader = jest.fn<
+  const githubLoader = vi.fn<
     Promise<LoadedState>,
     [string, LoadedState | null]
   >();

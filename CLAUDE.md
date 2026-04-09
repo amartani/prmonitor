@@ -10,8 +10,8 @@ When working with library-specific questions, use the Context7 MCP server to fet
 - React: `/websites/react_dev`
 - TypeScript: `/microsoft/typescript-website`
 - MobX: `/mobxjs/mobx`
-- Jest: `/websites/jestjs_io`
-- Webpack: `/websites/webpack_js`
+- Vitest: `/vitest-dev/vitest`
+- Vite: `/vitejs/vite`
 - Chrome Extensions (Manifest V3): `/websites/developer_chrome_extensions`
 - Octokit (GitHub API): `/octokit/rest.js`
 - GraphQL Request: `/onfido/graphql-request`
@@ -24,7 +24,7 @@ Use these library IDs when querying Context7 for API syntax, configuration, migr
 # Install dependencies
 yarn install
 
-# Start webpack dev server
+# Start Vite dev server (popup UI; port 9000)
 yarn start
 
 # Watch TypeScript compilation (type checking)
@@ -36,8 +36,11 @@ yarn build
 # Run tests
 yarn test
 
-# Run specific test file
-yarn test src/path/to/file.spec.ts
+# Run tests in watch mode
+yarn test:watch
+
+# Run a single test file
+yarn vitest run src/path/to/file.spec.ts
 
 # Lint code
 yarn lint:check
@@ -111,10 +114,11 @@ MobX decorators (`@observable`, `@computed`) enable reactive updates to the UI.
 ### TypeScript Configuration
 - Strict mode enabled with all strict type-checking options
 - `experimentalDecorators` enabled for MobX
+- `useDefineForClassFields: false` so MobX `@observable` works with TypeScript class fields
 - Test files (`*.spec.ts`) and `testing/` directories excluded from compilation
 
 ### Testing
-- Jest with `ts-jest` preset
+- Vitest with `environment: "jsdom"` and globals enabled (`describe`, `it`, `expect`, `vi`, etc.)
 - Test files use `.spec.ts` suffix
 - Fakes/mocks organized in `testing/` subdirectories or `fake-*.ts` files
 - Example: `chrome/fake-chrome.ts`, `environment/testing/fake.ts`
@@ -122,8 +126,8 @@ MobX decorators (`@observable`, `@computed`) enable reactive updates to the UI.
 ### Browser Extension Structure
 - Uses Chrome Manifest V3
 - Background script is a service worker (not persistent)
-- Webpack bundles `background.ts` and `popup.tsx` separately
-- `manifest.json` at root defines permissions and entry points
+- Vite builds the service worker as a single `background.js` (`vite.background.config.ts`) and the popup from `index.html` (`vite.config.ts`)
+- `manifest.json` at root defines permissions and entry points (`default_popup` is `index.html#popup`)
 
 ## GitHub Enterprise Support
 
@@ -133,7 +137,5 @@ To use with GitHub Enterprise, modify the `baseUrl` in the GitHub API configurat
 
 The `yarn build` command:
 1. Removes `dist/` directory
-2. Runs Webpack in production mode
-3. Bundles `background.js` and `popup.js`
-4. Copies `manifest.json` and `images/` to `dist/`
-5. Generates `index.html` from `src/popup.html` template
+2. Builds `background.js` (single ES module bundle for the MV3 worker) and copies `manifest.json` and `images/`
+3. Builds the popup from `index.html` into `dist/index.html` plus hashed assets under `dist/assets/`
