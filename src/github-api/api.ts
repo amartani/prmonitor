@@ -17,6 +17,9 @@ export interface GitHubApi {
 
   /**
    * Returns the full list of pull requests matching a given query.
+   *
+   * Results are limited to pull requests last updated within the past 90 days
+   * (applied in the implementation alongside `is:pr`).
    */
   searchPullRequests(query: string): Promise<
     // Note: There might be a more efficient way to represent this type.
