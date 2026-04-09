@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { observer } from "mobx-react-lite";
-import moment from "moment";
-import React from "react";
+import { formatTimeAgo } from "../format-time-ago";
 import { Alert } from "react-bootstrap";
 import { SmallButton } from "./design/Button";
 import { Core } from "../state/core";
@@ -20,7 +19,7 @@ export const Status = observer((props: StatusProps) => {
     lastUpdated = (
       <div>
         Last updated{" "}
-        {moment(props.core.loadedState.startRefreshTimestamp).fromNow()}
+        {formatTimeAgo(props.core.loadedState.startRefreshTimestamp)}
         {". "}
         {props.core.refreshing ? (
           "Refreshing..."

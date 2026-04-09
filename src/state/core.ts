@@ -107,8 +107,9 @@ export class Core {
       );
       await this.saveNotifiedPullRequests(notifyAboutPullRequests);
       this.saveError(null);
-    } catch (e: any) {
-      this.saveError(e.message);
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : String(e);
+      this.saveError(message);
       throw e;
     } finally {
       await this.saveRefreshing(false);

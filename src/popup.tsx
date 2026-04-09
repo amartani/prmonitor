@@ -9,8 +9,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons/faPen";
 import { faPodcast } from "@fortawesome/free-solid-svg-icons/faPodcast";
 import { faReply } from "@fortawesome/free-solid-svg-icons/faReply";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { chromeApiSingleton } from "./chrome/implementation";
 import { Popup } from "./components/Popup";
 import { buildEnvironment } from "./environment/implementation";
@@ -76,10 +75,14 @@ if (isSecondMonitor) {
   `;
 }
 
-ReactDOM.render(
+const rootEl = document.getElementById("root");
+if (!rootEl) {
+  throw new Error('Missing popup root element with id "root"');
+}
+const root = createRoot(rootEl);
+root.render(
   <>
     <Global styles={css(globalCssTemplates)} />
     <Popup core={core} />
-  </>,
-  document.getElementById("root")
+  </>
 );

@@ -448,6 +448,20 @@ After each phase:
 
 ---
 
+## Implementation progress
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1 | Done | Moment removed; `src/format-time-ago.ts` + tests; webpack `IgnorePlugin` for moment removed; unused `webpack` require removed; `jest-environment-jsdom` for `testEnvironment: "jsdom"`; removed deprecated `@typescript-eslint/camelcase`; `ecmaVersion` 2020 |
+| Phase 2 | Done | TypeScript `^5.7.0`; `jsx: "react-jsx"`; components use automatic JSX (hooks-only imports where needed); `popup.tsx` uses `createRoot` from `react-dom/client` with null check for `#root` |
+| Phase 3 | Done | `@types/react` / `@types/react-dom` `^18.3.0`; babel-loader rule removed from `webpack.config.js` |
+| Phase 4 | Done | `@octokit/core` `^6.1.4` (peer for throttling); `@octokit/rest` `^21`, `@octokit/plugin-throttling` `^9`; `PaginationResults` type local in `github-api/api.ts` (avoids broken paginate-rest subpath); throttle callbacks untyped for LimitHandler compatibility; `react-bootstrap` `^2.10`; ESLint `^8.57`, `@typescript-eslint` `^8`, `eslint-config-prettier` `^9`, `eslint-plugin-react` `^7.37`; extends `plugin:react/jsx-runtime` |
+| Phase 5 | Skipped | Per plan (5.1–5.2); 5.3 optional not done |
+
+**Verification (latest):** `yarn test`, `yarn build`, and `yarn lint:check` all pass. Jest prints a ts-jest warning that TypeScript 5.x is outside its tested range; upgrading Jest/ts-jest together would clear that (optional follow-up).
+
+---
+
 ## Success Criteria
 
 This modernization is successful if:

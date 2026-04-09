@@ -1,4 +1,5 @@
 import { components } from "@octokit/openapi-types";
+import { RestEndpointMethodTypes } from "@octokit/rest";
 import { GitHubApi } from "../../github-api/api";
 import { mocked } from "../../testing/mocked";
 import { refreshOpenPullRequests } from "./pull-requests";
@@ -83,7 +84,7 @@ describe("refreshOpenPullRequests", () => {
       Promise.resolve({
         requested_reviewers: [],
         requested_teams: [],
-      } as any)
+      } as unknown as RestEndpointMethodTypes["pulls"]["get"]["response"]["data"])
     );
     mocked(githubApi.loadComments).mockReturnValue(Promise.resolve([]));
     mocked(githubApi.loadReviews).mockReturnValue(Promise.resolve([]));

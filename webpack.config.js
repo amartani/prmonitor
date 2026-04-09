@@ -1,5 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const CopyPlugin = require("copy-webpack-plugin");
@@ -8,11 +7,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   module: {
     rules: [
-      {
-        include: [path.resolve(__dirname, "src")],
-        loader: "babel-loader",
-        test: /\.js$/,
-      },
       {
         test: /\.tsx?$/,
         use: "ts-loader",
@@ -57,10 +51,6 @@ module.exports = {
       template: path.join(__dirname, "src", "popup.html"),
       inject: true,
       chunks: ["popup"],
-    }),
-    new webpack.IgnorePlugin({
-      resourceRegExp: /^\.\/locale$/,
-      contextRegExp: /moment$/,
     }),
     new CopyPlugin({
       patterns: [
