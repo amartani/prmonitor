@@ -265,9 +265,9 @@ export class Core {
     });
 
     // Note: this is a hack in place because outside of a Chrome extension (ie
-    // when developing with webpack dev server), we don't have a background
+    // when developing with Vite dev server), we don't have a background
     // script that will refresh.
-    if (process.env.NODE_ENV === "development") {
+    if (import.meta.env.DEV && import.meta.env.MODE !== "test") {
       this.refreshPullRequests().catch(console.error);
     }
   }

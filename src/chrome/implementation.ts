@@ -12,7 +12,7 @@ import { fakeChrome } from "./fake-chrome";
 
 export let chromeApiSingleton: ChromeApi;
 
-if (!chrome.extension && process.env.NODE_ENV === "development") {
+if (!chrome.extension && import.meta.env.DEV && import.meta.env.MODE !== "test") {
   // We're developing outside of the Chrome extension environment.
   // Create a partial fake covering the APIs we need.
   chromeApiSingleton = fakeChrome;

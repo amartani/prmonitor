@@ -47,7 +47,7 @@
   "scripts": {
     "start": "vite",
     "watch": "tsc --noEmit --watch",
-    "build": "rm -rf dist && vite build --config vite.background.config.ts && vite build",
+    "build": "rm -rf dist && vite build --config vite.background.config.ts && vite build && node scripts/check-background-bundle.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint:check": "eslint \"src/**/*.ts\" \"src/**/*.tsx\"",

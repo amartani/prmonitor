@@ -44,5 +44,45 @@ module.exports = {
         vi: "readonly",
       },
     },
+    {
+      // Extension code (popup + service worker graph) must not use Node globals;
+      // MV3 workers have no `process` at runtime.
+      files: ["src/**/*.ts", "src/**/*.tsx"],
+      excludedFiles: ["**/*.spec.ts", "src/environment/testing/**"],
+      env: {
+        browser: true,
+        es2020: true,
+      },
+      rules: {
+        "no-restricted-globals": [
+          "error",
+          {
+            name: "Buffer",
+            message:
+              "Node global not available in the extension; avoid Buffer in src/.",
+          },
+          {
+            name: "__dirname",
+            message:
+              "Node global not available in the extension; avoid __dirname in src/.",
+          },
+          {
+            name: "__filename",
+            message:
+              "Node global not available in the extension; avoid __filename in src/.",
+          },
+          {
+            name: "process",
+            message:
+              "Use import.meta.env (Vite) instead of process; the service worker bundle has no Node process object.",
+          },
+          {
+            name: "require",
+            message:
+              "Use ESM import instead of require in extension source.",
+          },
+        ],
+      },
+    },
   ],
 };
