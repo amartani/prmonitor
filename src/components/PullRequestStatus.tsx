@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { observer } from "mobx-react-lite";
+import type { ReactElement } from "react";
 import { Badge } from "react-bootstrap";
 import { EnrichedPullRequest } from "../filtering/enriched-pull-request";
 import {
@@ -97,8 +98,8 @@ export const PullRequestStatus = observer(
   }
 );
 
-function getBadges(state: PullRequestState): JSX.Element[] {
-  const badges: JSX.Element[] = [];
+function getBadges(state: PullRequestState): ReactElement[] {
+  const badges: ReactElement[] = [];
   if (state.draft) {
     badges.push(DRAFT);
   }
@@ -115,7 +116,7 @@ function getBadges(state: PullRequestState): JSX.Element[] {
   return badges;
 }
 
-function getCheckStatusBadge(checkStatus?: CheckStatus): JSX.Element[] {
+function getCheckStatusBadge(checkStatus?: CheckStatus): ReactElement[] {
   switch (checkStatus) {
     case "PENDING":
       return [CHECK_STATUS_PENDING];
@@ -130,8 +131,8 @@ function getCheckStatusBadge(checkStatus?: CheckStatus): JSX.Element[] {
   }
 }
 
-function getIncomingStateBadges(state: IncomingState): JSX.Element[] {
-  const badges: JSX.Element[] = [];
+function getIncomingStateBadges(state: IncomingState): ReactElement[] {
+  const badges: ReactElement[] = [];
   badges.push(...getCheckStatusBadge(state.checkStatus));
 
   if (state.newReviewRequested) {
@@ -148,8 +149,8 @@ function getIncomingStateBadges(state: IncomingState): JSX.Element[] {
   return badges;
 }
 
-function getOutgoingStateBadges(state: OutgoingState): JSX.Element[] {
-  const badges: JSX.Element[] = [];
+function getOutgoingStateBadges(state: OutgoingState): ReactElement[] {
+  const badges: ReactElement[] = [];
   badges.push(...getCheckStatusBadge(state.checkStatus));
 
   if (state.mergeable) {
