@@ -52,7 +52,7 @@ function loadFromStorage<T>(
     chromeApi.storage.local.get([key], (dict) => {
       let result;
       try {
-        result = JSON.parse(dict[key]);
+        result = JSON.parse(String(dict[key]));
       } catch {
         // Because we were previously storing values directly without JSON serialization,
         // we may need to fall back to non-JSON deserialization.
